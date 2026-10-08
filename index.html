@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serena Tempestade 🌩️🧉</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    :root {
+      --verde: #4a7c59;
+      --verde-claro: #7fb069;
+      --marrom: #8b5a2b;
+      --marrom-claro: #d9b38c;
+      --ceu: #e0edf7;
+      --fundo: #faf9f6;
+      --texto: #333333;
+      --botaowpp: #25d366;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--fundo); color: var(--texto); line-height: 1.6; }
+    
+    /* Navegação */
+    nav { background: rgba(255,255,255,0.95); box-shadow: 0 2px 8px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100; }
+    .nav-container { max-width: 1000px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .logo { font-size: 1.4em; font-weight: bold; color: var(--verde); text-decoration: none; }
+    .menu a { margin-left: 15px; color: var(--texto); text-decoration: none; font-weight: 500; transition: color 0.3s; font-size: 0.95em; }
+    .menu a:hover { color: var(--verde); }
+    .menu-toggle { display: none; font-size: 1.8em; cursor: pointer; color: var(--verde); }
+    
+    /* 🖼️ CAPA */
+    #capa {
+      width: 100%;
+      min-height: 90vh;
+      background: linear-gradient(to right, rgba(74, 124, 89, 0.4), rgba(74, 124, 89, 0.15)), 
+                  url('https://i.ibb.co/CsnRGYrz/IMG-20261008-162600-333.png') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: left;
+      color: white;
+      padding: 60px 40px;
+      position: relative;
+    }
+    .capa-conteudo {
+      max-width: 520px;
+      z-index: 2;
+      margin-left: 5%;
+    }
+    .capa-conteudo h1 {
+      font-size: 2.8em;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+    .capa-conteudo p {
+      font-size: 1.1em;
+      margin-bottom: 30px;
+      opacity: 0.95;
+      line-height: 1.6;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+    .capa-botoes {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 13px 28px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.95em;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-block;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-principal { background: white; color: var(--verde); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+    .btn-secundario { background: transparent; color: white; border: 2px solid white; }
+    .btn-secundario:hover { background: rgba(255,255,255,0.2); }
+    
+    section { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+    h2 { font-size: 1.6em; color: var(--verde); text-align: center; margin-bottom: 40px; padding-top: 20px; }
+    
+    /* Sobre */
+    .historia { background: white; padding: 35px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .historia p { margin-bottom: 18px; font-size: 1.02em; color: #444; }
+    .destaque { font-size: 1.05em; font-style: italic; color: var(--verde); padding: 18px; background: var(--ceu); border-radius: 10px; text-align: center; margin: 25px 0; }
+    .assinatura { text-align: right; margin-top: 30px; font-style: italic; color: var(--marrom); }
+    
+    /* Filtro Categoria */
+    .filtros { text-align:center; margin-bottom:30px; }
+    .filtros button {
+      padding:8px 16px; margin:4px; border:none; border-radius:20px; cursor:pointer; font-weight:500; transition:0.2s;
+    }
+    .filtros button.ativo { background:var(--verde); color:white; }
+    .filtros button:not(.ativo) { background:var(--marrom-claro); color:var(--marrom); }
+    .filtros button:hover { opacity:0.9; }
+    
+    /* Produtos */
+    .grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
+    .produto { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.3s; }
+    .produto:hover { transform: translateY(-4px); }
+    .produto-img { height: 180px; padding:0; background:transparent; overflow:hidden; }
+    .produto-img img { width:100%; height:100%; object-fit:cover; }
+    .produto-img span { font-size:2.5em; color:var(--marrom-claro); display:flex; align-items:center; justify-content:center; height:100%; }
+    .produto-info { padding: 18px; }
+    .produto-nome { font-weight: bold; color: var(--verde); margin-bottom: 8px; font-size: 1em; }
+    .produto-desc { font-size: 0.88em; color: #666; margin-bottom: 12px; }
+    .produto-preco { font-size: 1.05em; font-weight: bold; color: var(--marrom); margin-bottom: 12px; }
+    .btn-wpp { display: block; text-align: center; background: var(--botaowpp); color: white; padding: 9px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9em; transition: background 0.2s; }
+    .btn-wpp:hover { background: #1ebe5d; }
+    .aviso { background: #f0f7ed; padding: 15px; border-radius: 10px; text-align: center; color: var(--verde); font-size: 0.9em; margin-bottom: 30px; }
+    
+    /* Blog */
+    .post { background: white; padding: 28px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .post-data { font-size: 0.82em; color: #999; margin-bottom: 8px; }
+    .post-titulo { font-size: 1.2em; color: var(--marrom); margin-bottom: 15px; }
+    .post-conteudo p { margin-bottom: 15px; color: #444; font-size: 0.98em; }
+    .post-destaque { background: #f0f7ed; padding: 15px; border-radius: 8px; font-style: italic; color: var(--verde); text-align: center; margin: 18px 0; font-size: 0.98em; }
+    .dica-novo { background: #fff8e6; padding: 15px; border-radius: 10px; text-align: center; color: #8b6914; font-size: 0.9em; margin-bottom: 30px; }
+    
+    /* Contato */
+    .contato-card { background: white; padding: 35px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); text-align: center; max-width: 500px; margin: 0 auto; }
+    .contato-item { margin-bottom: 25px; }
+    .contato-item h3 { color: var(--marrom); margin-bottom: 8px; font-size: 1em; }
+    .contato-item p { color: #555; font-size: 0.95em; }
+    .contato-item a { color: var(--verde); text-decoration: none; }
+    .contato-item a:hover { text-decoration: underline; }
+    
+    footer { text-align: center; padding: 35px 20px; background: #f0ebe3; color: var(--marrom); font-size: 0.85em; margin-top: 40px; }
+    
+    hr { border: none; border-top: 1px dashed #ddd; margin: 40px 0; }
+    
+    @media (max-width: 768px) {
+      .menu { display: none; width: 100%; margin-top: 12px; }
+      .menu a { display: block; margin: 8px 0; text-align: center; }
+      .menu-toggle { display: block; }
+      #capa { justify-content: center; text-align: center; padding: 40px 20px; }
+      .capa-conteudo { margin-left: 0; max-width: 100%; }
+      .capa-conteudo h1 { font-size: 2em; }
+      .capa-botoes { justify-content: center; }
+      section { padding: 40px 15px; }
+      .historia, .post, .contato-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navegação -->
+  <nav>
+    <div class="nav-container">
+      <a href="#capa" class="logo">Serena Tempestade 🌩️</a>
+      <span class="menu-toggle" onclick="toggleMenu()">☰</span>
+      <div class="menu" id="menu">
+        <a href="#capa">Início</a>
+        <a href="#sobre">Sobre Mim</a>
+        <a href="#produtos">Produtos</a>
+        <a href="#blog">Meu Cantinho</a>
+        <a href="#contato">Contato</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 🖼️ CAPA -->
+  <section id="capa">
+    <div class="capa-conteudo">
+      <h1>🧉 Chimarrão na mão,<br>plantas no coração</h1>
+      <p>Arte, natureza e carinho em cada detalhe. Produtos feitos à mão, cultivados com alma — aqui em Vilhena, Rondônia.</p>
+      <div class="capa-botoes">
+        <a href="#produtos" class="btn btn-principal">Ver Produtos</a>
+        <a href="#sobre" class="btn btn-secundario">Conhecer Minha História</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="text-align:center; padding:30px 20px;">
+    <p style="font-style:italic; color:var(--verde); font-size:1.05em;">"O chimarrão me ensinou que amargar faz parte da vida, mas não precisa definir o dia." 🧉✨</p>
+  </section>
+
+  <hr>
+
+  <!-- 🌿 SOBRE MIM -->
+  <section id="sobre">
+    <h2>🌿 Sobre Mim</h2>
+    <div class="historia">
+      <h3 style="color:var(--marrom); margin-bottom:15px;">🧉 Minha história com o chimarrão</h3>
+      
+      <p>Eu cresci na roça, com as mãos na terra, plantando e colhendo erva-mate ao lado dos meus pais. Meus avós já cultivavam antes de eu nascer — essa tradição corre na minha vida, está no meu sangue. Até os dezessete anos, a erva fazia parte do meu dia a dia, do nosso trabalho, da nossa mesa.</p>
+      
+      <p>Hoje, onde quer que eu esteja, o chimarrão continua comigo. Não é só uma bebida — é minha raiz, minha conexão com quem eu sou e de onde eu vim. Quando eu preparo um chimarrão, sinto que estou de volta lá, naquela terra, com aquelas pessoas que amo.</p>
+      
+      <div class="destaque">
+        "Porque pra mim, o chimarrão nunca foi só uma bebida. É memória. É família. É casa." 🧉💛
+      </div>
+      
+      <h3 style="color:var(--marrom); margin:25px 0 15px;">🌱 E as plantas?</h3>
+      <p>Sempre tive um cantinho verde. Ver algo crescer, cuidar, ver o resultado do carinho — isso me faz bem. Cada muda que cultivo é um pouquinho de paciência e esperança que eu divido com você.</p>
+      
+      <h3 style="color:var(--marrom); margin:25px 0 15px;">🎀 E as minhas peças?</h3>
+      <p>Quando decoro uma cuia ou crio um enfeite, coloco nela o mesmo carinho que aprendi na roça. Cada detalhe pensado com atenção. Cada peça é única — assim como cada um de nós.</p>
+      
+      <p style="margin-top:25px;">Quero compartilhar com você um pouquinho do que me faz feliz. Seja uma planta, uma peça artesanal, um produto de beleza ou simplesmente uma palavra sincera. Aqui não tem perfeição — tem verdade, tem carinho, tem gente de verdade.</p>
+      
+      <p class="assinatura">— Com carinho,<br><strong>Serena Tempestade</strong> 🌩️🧉🌿</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- 🛍️ PRODUTOS — Carregando da Planilha -->
+  <section id="produtos">
+    <h2>🛍️ Meus Produtos</h2>
+    <p style="text-align:center; color:#777; margin-bottom:20px;">Atualizado sempre com carinho 💛 — novo produto = nova surpresa!</p>
+    
+    <div class="aviso">
+      💬 <strong>Como funciona:</strong> Clique em "Pedir pelo WhatsApp" → eu te respondo e combinamos tudo! ✨
+    </div>
+
+    <!-- Filtro por Categoria -->
+    <div class="filtros">
+      <button onclick="filtrarProdutos('todos')" class="btn-filtro ativo">Todos</button>
+      <button onclick="filtrarProdutos('Acessórios de Chimarrão')" class="btn-filtro">Chimarrão</button>
+      <button onclick="filtrarProdutos('Mudas de Plantas')" class="btn-filtro">Plantas</button>
+      <button onclick="filtrarProdutos('Arranjos')" class="btn-filtro">Arranjos</button>
+      <button onclick="filtrarProdutos('Beleza')" class="btn-filtro">Beleza</button>
+    </div>
+
+    <!-- Área onde os produtos aparecem -->
+    <div id="lista-produtos" class="grade">
+      <p style="text-align:center; color:#888; grid-column:1/-1; padding:40px;">Carregando produtos... 🌿</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- 📝 BLOG -->
+  <section id="blog">
+    <h2>📝 Meu Cantinho</h2>
+    <p style="text-align:center; color:#777; margin-bottom:20px;">Pensamentos, histórias e o dia a dia por aqui 💛</p>
+    
+    <div class="dica-novo">
+      ✨ <strong>Como adicionar um post novo:</strong> Copie o modelo, cole abaixo, troque a data, título e texto. Simples!
+    </div>
+
+    <!-- Post 1 -->
+    <article class="post">
+      <div class="post-data">08 de outubro de 2026</div>
+      <h3 class="post-titulo">☁️ Dia de chuva, chimarrão e pensamentos</h3>
+      <div class="post-conteudo">
+        <p>Hoje o dia amanheceu chuvoso, daqueles que pedem um chimarrão quentinho e um momento de silêncio. E foi assim, com a cuia na mão, que eu parei pra pensar em como a vida é parecida com o clima.</p>
+        <p>Tem dias de sol forte. Tem dias de chuva. Mas a chuva também faz crescer. E depois dela, sempre vem o sol.</p>
+        <div class="post-destaque">
+          "Não tema os dias cinzentos. Eles também fazem parte do seu crescimento." 🌧️🌱
+        </div>
+        <p>Que hoje o seu chimarrão seja sua companhia favorita. 💛</p>
+      </div>
+    </article>
+
+    <!-- Post 2 -->
+    <article class="post">
+      <div class="post-data">07 de outubro de 2026</div>
+      <h3 class="post-titulo">🌱 O que aprendi cuidando das minhas plantas</h3>
+      <div class="post-conteudo">
+        <p>As plantas me ensinam coisas que nenhum livro conseguiria. Elas crescem no silêncio, sem pressa, mas com constância. E isso é exatamente como deve ser com a gente também.</p>
+        <p>Cada uma tem seu tempo, seu ritmo, sua necessidade. Não adianta comparar. Você também tem seu tempo certo de florescer. ✨</p>
+      </div>
+    </article>
+
+    <!-- Modelo para novo post -->
+    <article class="post" style="background:#f9f7f0; border:1px dashed #ddd;">
+      <div class="post-data">__/__/____</div>
+      <h3 class="post-titulo">✍️ Título do seu post</h3>
+      <div class="post-conteudo">
+        <p>Escreva aqui o que seu coração quer compartilhar hoje. Pode ser uma reflexão, uma história, uma dica. Escreva com sua voz, do seu jeito. 💛</p>
+        <p>Até o próximo post! 🌿</p>
+      </div>
+    </article>
+  </section>
+
+  <hr>
+
+  <!-- 💬 CONTATO -->
+  <section id="contato">
+    <h2>💬 Fale Comigo</h2>
+    <div class="contato-card">
+      <div class="contato-item">
+        <h3>📱 WhatsApp</h3>
+        <p>É por aqui que combinamos tudo! 💛</p>
+        <a href="https://wa.me/5569981478873" class="btn-wpp" target="_blank" style="display:inline-block; padding:12px 25px; font-size:1em; margin-top:8px;">💬 Abrir WhatsApp</a>
+      </div>
+      <div class="contato-item">
+        <h3>🎵 TikTok</h3>
+        <p>@serenatempestade — me acompanhe nos vídeos e lives!</p>
+      </div>
+      <div class="contato-item">
+        <h3>📸 Instagram</h3>
+        <p>@serenatempestade — por aqui também compartilho meu dia a dia!</p>
+      </div>
+      <div class="contato-item">
+        <h3>📍 Onde estou</h3>
+        <p>Vilhena — Rondônia</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer>
+    <p><strong>Serena Tempestade</strong> 🌩️🧉🌿</p>
+    <p>Vilhena — RO | Todos os direitos reservados</p>
+    <p style="margin-top:8px; font-size:0.8em;">Consultora independente Natura & Boticário</p>
+  </footer>
+
+  <script>
+    // 🔗 LINK DO APPS SCRIPT JÁ INSERIDO
+    const LINK_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbxwWWLN4HGUFZprNDmp-YXHdKDs1r_VbH3zagd5juAb5_bBjKWPGVq5t2lNBuadSSY3/exec';
+
+    let todosProdutos = [];
+
+    // Carrega produtos quando a página abre
+    window.onload = function() {
+      carregarProdutos();
+    };
+
+    async function carregarProdutos() {
+      try {
+        const resposta = await fetch(LINK_APPS_SCRIPT);
+        todosProdutos = await resposta.json();
+        mostrarProdutos(todosProdutos);
+      } catch (erro) {
+        document.getElementById('lista-produtos').innerHTML = 
+          '<p style="text-align:center; color:red; grid-column:1/-1;">⚠️ Verifique o nome da aba na planilha — deve se chamar "Produtos".</p>';
+        console.error(erro);
+      }
+    }
+
+    function mostrarProdutos(lista) {
+      const container = document.getElementById('lista-produtos');
+      
+      if (lista.erro) {
+        container.innerHTML = `<p style="text-align:center; color:orange; grid-column:1/-1; padding:40px;">⚠️ ${lista.erro}</p>`;
+        return;
+      }
+      
+      if (lista.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:#888; grid-column:1/-1; padding:40px;">Nenhum produto disponível no momento. Adicione produtos na planilha e coloque "Sim" na coluna Disponível! 🌿✨</p>';
+        return;
+      }
+
+      container.innerHTML = lista.map(produto => `
+        <div class="produto" data-categoria="${produto.categoria}">
+          <div class="produto-img">
+            ${produto.imagem 
+              ? `<img src="${produto.imagem}" alt="${produto.nome}">`
+              : `<span>📷</span>`
+            }
+          </div>
+          <div class="produto-info">
+            <div class="produto-nome">${produto.nome}</div>
+            <div class="produto-desc">${produto.descricao}</div>
+            <div class="produto-preco">R$ ${produto.preco}</div>
+            <a href="https://wa.me/5569981478873?text=Olá! Gostaria de pedir: ${encodeURIComponent(produto.nome)} 🧉" 
+               class="btn-wpp" target="_blank">💬 Pedir pelo WhatsApp</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filtrarProdutos(categoria) {
+      // Ativa botão selecionado
+      document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('ativo'));
+      event.target.classList.add('ativo');
+      
+      if (categoria === 'todos') {
+        mostrarProdutos(todosProdutos);
+      } else {
+        const filtrado = todosProdutos.filter(p => p.categoria.includes(categoria));
+        mostrarProdutos(filtrado);
+      }
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+    document.querySelectorAll('.menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 768) {
+          document.getElementById('menu').style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
